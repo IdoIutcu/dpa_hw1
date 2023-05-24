@@ -10,7 +10,7 @@ from xgboost import XGBClassifier
 import pickle
 
 # Load the data
-test, test_labels = get_test()
+test, test_labels, pat_list = get_test_pred()
 
 encoder = Encoder(config['input_size'], config['hidden_size'])
 if os.path.exists('encoder.pkl'):
@@ -41,20 +41,26 @@ xgb_classifier = pickle.load(open('xgb_classifier.pkl', 'rb'))
 # gb_pred = gb_classifier.predict(test)
 xgb_pred = xgb_classifier.predict(test)
 
+# f1 = f1_score(test_labels, xgb_pred)
+# print(f"F1 Score: {f1:.2f}" )
+
 # Save each model's predictions to a csv file
 # with open('mlp_pred.csv', 'w') as f:
 #     f.write('id, label\n')
 #     for i, x in enumerate(mlp_pred):
 #         f.write('patient_'+ str(i) + ', ' + str(x) + '\n')
+
 # with open('svm_pred.csv', 'w') as f:
 #     f.write('id, label\n')
 #     for i, x in enumerate(svm_pred):
 #         f.write('patient_'+ str(i) + ', ' + str(x) + '\n')
+
 # with open('gb_pred.csv', 'w') as f:
 #     f.write('id, label\n')
 #     for i, x in enumerate(gb_pred):
 #         f.write('patient_'+ str(i) + ', ' + str(x) + '\n')
-with open('prediction.csv', 'w') as f:
-    f.write('id, label\n')
+
+with open('prediction_yutko.csv', 'w') as f:
+    f.write('id,prediction\n')
     for i, x in enumerate(xgb_pred):
-        f.write('patient_'+ str(i) + ', ' + str(x) + '\n')
+        f.write(pat_list[i] + ', ' + str(x) + '\n')
