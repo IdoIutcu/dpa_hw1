@@ -16,9 +16,3 @@ class Encoder(torch.nn.Module):
 
     def load(self, path):
         self.load_state_dict(torch.load(path))
-    
-# data = read_psv_files_to_dict('data/minitrain')
-# inputs, targets = get_input_for_model(data)
-# inputs, targets = tensorize_input(inputs, targets)
-
-# emb = Encoder(config['input_size'], config['hidden_size'])
