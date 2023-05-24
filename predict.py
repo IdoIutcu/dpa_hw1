@@ -3,8 +3,8 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from utils import *
 from Encoder import *
-import torch
-import torch.nn as nn
+# import torch
+# import torch.nn as nn
 from sklearn.ensemble import GradientBoostingClassifier
 from xgboost import XGBClassifier
 import pickle
@@ -60,7 +60,7 @@ xgb_pred = xgb_classifier.predict(test)
 #     for i, x in enumerate(gb_pred):
 #         f.write('patient_'+ str(i) + ', ' + str(x) + '\n')
 
-with open('prediction_yutko.csv', 'w') as f:
+with open('prediction.csv', 'w') as f:
     f.write('id,prediction\n')
     for i, x in enumerate(xgb_pred):
         f.write(pat_list[i] + ', ' + str(x) + '\n')
