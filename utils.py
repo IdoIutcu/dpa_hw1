@@ -6,6 +6,7 @@ from collections import OrderedDict
 from matplotlib import pyplot as plt
 from sklearn.metrics import roc_curve, auc
 # import wandb
+import sys
 # import os
 from tqdm import tqdm
 
@@ -150,4 +151,13 @@ def get_test():
         test_targets = torch.load('test_targets.pkl')
     return test_inputs, test_targets
 
-get_pandas()
+def get_test_pred(path=sys.argv[1]):
+    data = read_psv_files_to_dict(path)
+    pat_list = list(map(lambda x: x[0], data.items()))
+
+    test_inputs, test_targets = get_input_for_model(data, dropset = config['dropset'])
+    test_inputs, test_targets = tensorize_input(test_inputs, test_targets)
+    torch.save(test_inputs, 'test_inputs.pkl')
+    torch.save(test_targets, 'test_targets.pkl')
+
+    return test_inputs, test_targets, pat_list
